@@ -52,21 +52,23 @@
 </div>
 
 <div class="optWrap">
-    <div class="perOpt">
-        <p class="optTitle">칼라 선택</p>
-        <ul id="ul_color">
-            <li><a href="javascript:void(0);" data-color="blue"><span class="cl black">블루</span></a></li>
-            <li><a href="javascript:void(0);" data-color="brown"><span class="cl blue">브라운</span></a></li>
-            <li><a href="javascript:void(0);" data-color="grey"><span class="cl purple">그레이</span></a></li>
-        </ul>
-    </div>
-    <div class="perOpt">
-        <p class="optTitle">사이즈 선택</p>
-        <ul id="ul_size">
-            <li><a href="javascript:void(0);" data-size="1000">1000</a></li>
-            <li><a href="javascript:void(0);" data-size="1500">1500</a></li>
-            <li><a href="javascript:void(0);" data-size="1900">1900</a></li>
-        </ul>
+    <div id="div_Option">
+<%--        <div class="perOpt">--%>
+<%--            <p class="optTitle">칼라 선택</p>--%>
+<%--            <ul id="ul_color">--%>
+<%--                <li><a href="javascript:void(0);" data-color="blue"><span class="cl black">블루</span></a></li>--%>
+<%--                <li><a href="javascript:void(0);" data-color="brown"><span class="cl blue">브라운</span></a></li>--%>
+<%--                <li><a href="javascript:void(0);" data-color="grey"><span class="cl purple">그레이</span></a></li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--        <div class="perOpt">--%>
+<%--            <p class="optTitle">사이즈 선택</p>--%>
+<%--            <ul id="ul_size">--%>
+<%--                <li><a href="javascript:void(0);" data-size="1000">1000</a></li>--%>
+<%--                <li><a href="javascript:void(0);" data-size="1500">1500</a></li>--%>
+<%--                <li><a href="javascript:void(0);" data-size="1900">1900</a></li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
     </div>
 
     <div class="fixFunc inner">
@@ -80,10 +82,41 @@
     var color = "blue";
     var size = "1000";
 
-    $(function () {
+    var optionName = ['color', 'size'];
 
-        // 	modelViewerTexture.src = options[index].value;
-        // 	modelViewerTexture.iosSrc = options[index].id;
+    var optionList = [
+        ['blue', 'gray', 'brown'],
+        ['1000', '1500', '1900']
+    ];
+
+    var optionArr = new Array();
+
+    var optionImg = [
+        ['blue','1000','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_blue_1000.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_blue_1000.usdz'],
+        ['blue','1500','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_blue_1500.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_blue_1500.usdz'],
+        ['blue','1900','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_blue_1900.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_blue_1900.usdz'],
+        ['gray','1000','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_grey_1000.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_grey_1000.usdz'],
+        ['gray','1500','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_grey_1500.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_grey_1500.usdz'],
+        ['gray','1900','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_grey_1900.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_grey_1900.usdz'],
+        ['brown','1000','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1000.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1000.usdz'],
+        ['brown','1500','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1500.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1500.usdz'],
+        ['brown','1900','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1900.gltf','https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1900.usdz'],
+    ];
+
+    $(function () {
+        $.each(optionName, function (i, v) {
+            var optHtml = '';
+            optHtml += '        <div class="perOpt">';
+            optHtml += '            <p class="optTitle">사이즈 선택</p>';
+            optHtml += '            <ul id="ul_'+optionName[i]+'" class="sel_ul">';
+            $.each(optionList[i], function (j, v) {
+                optHtml += '                <li><a href="javascript:void(0);" data-value="'+optionList[i][j]+'">'+optionList[i][j]+'</a></li>';
+            });
+            optHtml += '            </ul>';
+            optHtml += '        </div>';
+            console.log(optHtml);
+            $("#div_Option").append(optHtml);
+        });
 
         // 옵션 선택하기
         $(".openOpt a").click(function () {
@@ -95,29 +128,42 @@
         $(".btnConfirm a").click(function () {
             $(".optWrap").removeClass("on");
             $(".fixFunc.inner").hide();
-            if ($("#ul_color a[class=on]").length > 0 && $("#ul_size a[class=on]").length > 0) {
+
+            if(chkOption()){
                 $("#div_Cover").hide();
                 $("#ar-button").show();
             }
         });
 
+
         // 색상 선택
-        $("#ul_color a").on('click', function () {
-            // alert('ulcolor');
-            $("#ul_color a").removeClass("on");
-            $(this).toggleClass("on");
-            color = $(this).data("color");
-            setSrc();
-        });
+        // $("#ul_color a").on('click', function () {
+        //     // alert('ulcolor');
+        //     $("#ul_color a").removeClass("on");
+        //     $(this).toggleClass("on");
+        //     color = $(this).data("color");
+        //     setSrc();
+        // });
 
         // 사이즈 선택
-        $("#ul_size a").on('click', function () {
-            // alert('ulcolor');
-            $("#ul_size a").removeClass("on");
+        // $("#ul_size a").on('click', function () {
+        //     // alert('ulcolor');
+        //     $("#ul_size a").removeClass("on");
+        //     $(this).toggleClass("on");
+        //     size = $(this).data("size");
+        //     setSrc();
+        // });
+
+        $(".sel_ul a").on('click', function() {
+            $(this).parents('ul').find('a').removeClass("on");
             $(this).toggleClass("on");
-            size = $(this).data("size");
-            setSrc();
+            if(chkOption()){
+                setSrc(optionArr);
+                $("#div_Cover").hide();
+            }
         });
+
+
 
 
         // $(".perOpt li a").click(function() {
@@ -127,16 +173,61 @@
 
     });
 
-    function setSrc() {
-        // 	modelViewerTexture.src = options[index].value;
-        // 	modelViewerTexture.iosSrc = options[index].id;
-        https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1900.gltf
-            $("#duck").attr("src", "https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_" + color + "_" + size + ".gltf");
-        $("#duck").attr("iosSrc", "https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_" + color + "_" + size + ".usdz");
+    // function setSrc() {
+    //     // 	modelViewerTexture.src = options[index].value;
+    //     // 	modelViewerTexture.iosSrc = options[index].id;
+    //     https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_brown_1900.gltf
+    //         $("#duck").attr("src", "https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_" + color + "_" + size + ".gltf");
+    //     $("#duck").attr("iosSrc", "https://hellovr.s3.ap-northeast-2.amazonaws.com/Rugs_Minimal/Circle_" + color + "_" + size + ".usdz");
+    // }
+
+    function setSrc(arrValue) {
+        for(var i=0; i<optionImg.length; i++) {
+            var tmpArr = optionImg[i];
+            var resultCnt = 0;
+            for(var j=0; j<optionName.length; j++) {
+                if(tmpArr[j] == arrValue[j]){
+                    resultCnt = resultCnt+1;
+                }
+            }
+            if(resultCnt==optionName.length) {
+                console.log(optionImg[i][optionName.length]);
+                console.log(optionImg[i][optionName.length+1]);
+                $("#duck").attr("src", optionImg[i][optionName.length]);
+                $("#duck").attr("iosSrc", optionImg[i][optionName.length]+1);
+            }
+        }
+    }
+
+    function chkOption() {
+        var optionCnt = 0;
+        optionArr = new Array();
+        $.each(optionName, function(i, v){
+            if($("#ul_"+optionName[i]).find("a[class=on]").length>0) {
+                optionCnt = optionCnt+1;
+                optionArr.push($("#ul_"+optionName[i]).find("a[class=on]").data("value"));
+            }
+        });
+
+        if(optionCnt==optionName.length){
+            return true;
+        } else {
+            return false;
+        }
     }
 </script>
 
 <script type="module">
+    var optionName = ['color', 'size'];
+    var optionList = [
+        ['blue', 'brown', 'gray'],
+        ['1000', '1500', '1900']
+    ];
+
+    var optionImg = [
+
+    ]
+
     // const modelViewerTexture = document.querySelector("model-viewer#duck");
     // const option1 = document.querySelector('#option1');
     // const option2 = document.querySelector("#option2");
