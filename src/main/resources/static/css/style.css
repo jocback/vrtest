@@ -55,7 +55,7 @@ div {position:relative;}
 div:after {content:''; clear:both; display:block; height:auto; overflow:hidden;}
 
 .wrap {max-width:720px; margin:0 auto;}
-.mSec {height:100vh; no-repeat center/cover; background-size:cover;}
+.mSec {height:100vh;}
 .mSec .mCon {height:100vh; display:flex; justify-content:center; align-items:center;}
 .mSec .mCon.beforeCon {background:rgba(255, 255, 255, 0.8); color:#000; font-size:16px; font-weight:500;}
 .fixFunc {position:fixed; left:0; bottom:20px; width:100%; padding:0 20px; z-index:10; box-sizing:border-box;}
@@ -77,3 +77,16 @@ div:after {content:''; clear:both; display:block; height:auto; overflow:hidden;}
 .optWrap .perOpt li .cl.red:after {content:''; position:absolute; left:0; top:50%; transform:translate(0, -50%); width:24px; height:24px; border-radius:50%; background:#FF334B;}
 
 .btnConfirm a {display:inline-block; width:100%; height:48px; line-height:48px; background:#000; color:#FFF; font-size:16px; font-weight:500; border-radius:4px; text-align:center;}
+
+
+/* 22.11.17 css 수정 */
+#duck {width: 100%; height: calc(100vh - 23%); max-width: calc(100% - 110px); top: 50%; left: 50%; transform: translate(-50%, -50%);}
+
+
+@media screen and (max-width: 1024px){
+    #duck {max-width: calc(100% - 80px);}
+}
+
+@media screen and (max-width: 575px){
+    #duck {max-width: calc(100% - 40px);}
+}
